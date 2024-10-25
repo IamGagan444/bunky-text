@@ -8,7 +8,9 @@ import {
   IconNewSection,
   IconTerminal2,
 } from "@tabler/icons-react";
+import { LogIn,LayoutDashboard,LogOut } from "lucide-react";
 import Image from "next/image";
+import { ModeToggle } from "@/components/ModeToggle";
 
 export default function FloatingNav() {
   const links = [
@@ -20,21 +22,21 @@ export default function FloatingNav() {
       href: "/",
     },
     {
-      title: "signup",
+      title: "Login",
       icon: (
-        <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "/accounts/sign-up",
-    },
-    {
-      title: "login",
-      icon: (
-        <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <LogIn className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "/accounts/sign-in",
     },
     {
-      title: "Aceternity UI",
+      title: "Dashboard",
+      icon: (
+        <LayoutDashboard  className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "/dashboard",
+    },
+    {
+      title: "Gagan",
       icon: (
         <Image
           src="https://assets.aceternity.com/logo-dark.png"
@@ -46,25 +48,26 @@ export default function FloatingNav() {
       href: "#",
     },
     {
-      title: "Changelog",
+      title: "Github",
       icon: (
-        <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
     },
     {
       title: "Twitter",
       icon: (
-        <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <LogOut className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
     },
     {
-      title: "GitHub",
+      title: "Theme",
       icon: (
-        <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        
+        <ModeToggle/>
       ),
-      href: "#",
+      href: "",
     },
   ];
 

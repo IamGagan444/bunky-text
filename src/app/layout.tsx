@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 // import Navbar from "@/client/navbar";
 import FloatingNav from "@/client/FloatingNav";
+import { SessionProvider } from "next-auth/react";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -34,11 +35,14 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
-        >
+        ><SessionProvider>
+
+       
         
         <main className="flex-grow">  {children}</main>
           <FloatingNav />
           <Toaster />
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>

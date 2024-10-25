@@ -69,7 +69,7 @@ console.log("credential issuue check",err.ok)
   };
 
   return (
-    <section className="h-screen grid place-items-center">
+    <section className="h-screen grid place-items-center mb-24">
       <Form {...form}>
         <Card className="w-[350px] my-28">
           <CardHeader>
@@ -116,7 +116,7 @@ console.log("credential issuue check",err.ok)
                 <Button
                   variant="outline"
                   type="button"
-                  // onClick={() => navigate("/")}
+                 
                 >
                   Cancel
                 </Button>

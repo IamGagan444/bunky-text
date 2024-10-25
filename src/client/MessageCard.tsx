@@ -15,61 +15,69 @@ import { Message } from "@/model/user.model";
 import axios from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useToast } from "@/hooks/use-toast";
+import { Trash2 } from "lucide-react";
 
 type MessageCardProps = {
   message: Message;
   onMessageDelete: (messageId: string) => void;
 };
 
-export default function MessageCard({message,onMessageDelete}:MessageCardProps) {
-const {toast}=useToast()
-const handleDeleteConfirm = async() => {
-  const response =await axios.delete<ApiResponse>(`/api/delete-message/${message?._id}`)
-toast({
-  title:response.data.message,
-  description:"message has been deleted"
-
-})
-  onMessageDelete(message?._id);
-};
+export default function MessageCard({
+  message,
+  onMessageDelete,
+}: MessageCardProps) {
+  console.log("message", message);
+  const { toast } = useToast();
+  const handleDeleteConfirm = async () => {
+    const response = await axios.delete<ApiResponse>(
+      `/api/delete-message/${message?._id}`
+    );
+    toast({
+      title: response.data.message,
+      description: "message has been deleted",
+    });
+    onMessageDelete(message?._id as string);
+  };
 
   return (
-    <CardSpotlight className="h-96 w-96">
-      <p className="text-xl font-bold relative z-20 mt-2 text-white">
-        Authentication steps
-      </p>
+    <CardSpotlight className="h-96 w-[200px]">
+      <div className="flex items-center justify-between">
+        <p className="text-xl font-bold relative z-20  text-white">
+          Message
+        </p>
 
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline">Show Dialog</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      <div className="text-neutral-200 mt-4 relative z-20">
-        Follow these steps to secure your account:
-        <ul className="list-none  mt-2">
-          <Step title="Enter your email address" />
-          <Step title="Create a strong password" />
-          <Step title="Set up two-factor authentication" />
-          <Step title="Verify your identity" />
-        </ul>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="destructive"
+              className="text-neutral-300 mt-4 relative z-20 cursor-pointer text-sm"
+            >
+              <Trash2 />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDeleteConfirm}>
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
+
       <p className="text-neutral-300 mt-4 relative z-20 text-sm">
-        Ensuring your account is properly secured helps protect your personal
-        information and data.
+        {message?.content}
+      </p>
+      <p className="text-neutral-300 mt-4 relative z-20 text-sm">
+        {message?.createdAt}
       </p>
     </CardSpotlight>
   );

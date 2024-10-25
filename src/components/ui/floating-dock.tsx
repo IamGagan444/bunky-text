@@ -4,6 +4,7 @@
  * Mobile navbar is better positioned at bottom right.
  **/
 "use client";
+
 import { cn } from "@/lib/utils";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 import {
@@ -29,7 +30,7 @@ export const FloatingDock = ({
   return (
     <>
       <FloatingDockDesktop items={items} className={desktopClassName} />
-      <FloatingDockMobile items={items} className={mobileClassName} />
+      {/* <FloatingDockMobile items={items} className={mobileClassName} /> */}
     </>
   );
 };
@@ -42,13 +43,14 @@ const FloatingDockMobile = ({
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
+
   return (
-    <div className={cn("relative block sm:hidden ", className)}>
+    <div className={cn("relative block sm:hidden bg-transparent ", className)}>
       <AnimatePresence>
         {open && (
           <motion.div
             layoutId="nav"
-            className="absolute  mb-5 w-full bottom-8  flex flex-wrap items-center justify-center gap-2"
+            className="absolute  mb-5 w-full bottom-8 bg-transparent flex flex-wrap items-center justify-center gap-2"
           >
             {items.map((item, idx) => (
               <motion.div
@@ -68,9 +70,9 @@ const FloatingDockMobile = ({
                 transition={{ delay: (items.length - 1 - idx) * 0.05 }}
               >
                 <Link
-                  href={item.href}
+                  href={item?.href}
                   key={item.title}
-                  className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
+                  className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 grid place-items-center"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
                 </Link>
@@ -103,7 +105,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "fixed bottom-5 left-0 right-0 mx-auto hidden sm:flex h-16 gap-4 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3 w-fit m",
+        "fixed bottom-5 left-0 right-0 mx-auto flex flex-wrap  h-16 gap-4 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3 w-fit ",
         className
       )}
     >
@@ -113,7 +115,6 @@ const FloatingDockDesktop = ({
     </motion.div>
   );
 };
-
 
 function IconContainer({
   mouseX,
@@ -137,8 +138,12 @@ function IconContainer({
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
   const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
 
-  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
-const heightTransformIcon = useTransform(
+  const widthTransformIcon = useTransform(
+    distance,
+    [-150, 0, 150],
+    [20, 40, 20]
+  );
+  const heightTransformIcon = useTransform(
     distance,
     [-150, 0, 150],
     [20, 40, 20]

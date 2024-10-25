@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -26,11 +26,15 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { useSession } from "next-auth/react";
 
 const Page = () => {
+  const { data: session, status } = useSession();
   const params = useParams();
   const { toast } = useToast();
   const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
     defaultValues: {
@@ -40,6 +44,7 @@ const Page = () => {
 
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
     console.log(data);
+    setLoading(true);
     try {
       const response = await axios.post("/api/verify-code", {
         username: params?.username,
@@ -54,10 +59,11 @@ const Page = () => {
         className: "bg-green-400 text-white",
       });
       router.replace("/accounts/sign-in");
+      setLoading(false);
     } catch (error) {
       console.error("error in verify", error);
       const axiosError = error as AxiosError<ApiResponse>;
-
+      setLoading(false);
       toast({
         title: "signup failed",
         description: axiosError?.response?.data?.message,
@@ -65,7 +71,16 @@ const Page = () => {
       });
     }
   };
-
+  if (status === "loading" || loading) {
+    return (
+      <div className="h-dvh w-full fixed inset-0 bg-gray-50 dark:bg-neutral-900 flex items-center justify-center z-50 ">
+        <Loader2 className=" animate-spin size-10 " />
+      </div>
+    );
+  }
+  if (status === "authenticated") {
+    router.replace("/accounts/sign-in");
+  }
   return (
     <section className="h-screen grid place-items-center">
       <Form {...form}>

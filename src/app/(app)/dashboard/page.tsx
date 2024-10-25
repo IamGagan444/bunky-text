@@ -15,7 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { acceptMessageSchema } from "@/schemas/acceptMessageSchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { Message } from "@/model/user.model";
-import { Loader2 } from "lucide-react";
+import { Loader2, RefreshCcw } from "lucide-react";
 
 const Page = () => {
   const { data: session, status } = useSession();
@@ -129,9 +129,9 @@ const Page = () => {
   }
 
   return (
-    <section className="m-2">
+    <section className="m-2 mb-24 ">
       <h2 className="text-4xl font-bold text-center my-5">User Dashboard</h2>
-      <div className="flex justify-center items-center space-x-2">
+      <div className="flex justify-center items-center space-x-2 sm:w-[40%] container mx-auto">
         <Input
           placeholder="Email"
           value={`${window.location.protocol}//${window.location.host}/u/${session?.user?.username}`}
@@ -142,26 +142,38 @@ const Page = () => {
           Copy
         </Button>
       </div>
-      <div className="flex items-center space-x-2 my-4">
-        <Switch
-          {...register("acceptMessages")}
-          id="airplane-mode"
-          checked={acceptMessages}
-          onCheckedChange={handleSwitchChange}
-          disabled={isSwitchLoading}
-        />
-        <Label htmlFor="airplane-mode">
-          Accept messages {acceptMessages ? "on" : "off"}
-        </Label>
+      <div className=" flex flex-col custom400:flex-row justify-center  gap-4  custom400:gap-10 items-center my-4 ">
+        <div className="flex items-center space-x-2">
+          <Switch
+            {...register("acceptMessages")}
+            id="airplane-mode"
+            checked={acceptMessages}
+            onCheckedChange={handleSwitchChange}
+            disabled={isSwitchLoading}
+          />
+          <Label htmlFor="airplane-mode">
+            Accept messages {acceptMessages ? "on" : "off"}
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RefreshCcw
+            className="h-4 w-4 cursor-pointer"
+            onClick={() => fetchMessages()}
+          />
+          <p>Refresh Messages</p>
+        </div>
       </div>
-      <div className="flex gap-4 flex-wrap items-center">
+
+      <div className="grid  sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {messages.length > 0 ? (
           messages.map((item) => (
             <MessageCard
               key={item.id}
               message={item}
               onMessageDelete={() =>
-                setMessages((prev) => prev.filter((msg) => msg.id !== item.id))
+                setMessages((prev) =>
+                  prev.filter((msg) => msg._id !== item._id)
+                )
               }
             />
           ))

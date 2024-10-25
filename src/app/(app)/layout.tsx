@@ -1,4 +1,4 @@
-import { SessionProvider } from "next-auth/react";
+
 
 export default function DashboardLayout({
   children,
@@ -7,7 +7,7 @@ export default function DashboardLayout({
 }) {
   return (
     <section>
-      <SessionProvider>{children}</SessionProvider>
+      {children}
     </section>
   );
 }
