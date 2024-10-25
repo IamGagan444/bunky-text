@@ -1,18 +1,16 @@
+"use client";
 import React from "react";
 import { FloatingDock } from "@/components/ui/floating-dock";
-import {
-  IconBrandGithub,
-  IconBrandX,
-  IconExchange,
-  IconHome,
-  IconNewSection,
-  IconTerminal2,
-} from "@tabler/icons-react";
-import { LogIn,LayoutDashboard,LogOut } from "lucide-react";
+import { IconBrandGithub, IconHome } from "@tabler/icons-react";
+import { LogIn, LayoutDashboard, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { ModeToggle } from "@/components/ModeToggle";
+import Logout from "./Logout";
+import { useSession } from "next-auth/react";
 
 export default function FloatingNav() {
+  const { data: session, status } = useSession();
+
   const links = [
     {
       title: "Home",
@@ -22,16 +20,19 @@ export default function FloatingNav() {
       href: "/",
     },
     {
-      title: "Login",
-      icon: (
-        <LogIn className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "/accounts/sign-in",
+      title: status === "authenticated" ? "Logout" : "Login",
+      icon:
+        status === "authenticated" ? (
+          <Logout />
+        ) : (
+          <LogIn className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        ),
+      href: status === "authenticated" ? "" : "/accounts/sign-in",
     },
     {
       title: "Dashboard",
       icon: (
-        <LayoutDashboard  className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <LayoutDashboard className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "/dashboard",
     },
@@ -52,24 +53,23 @@ export default function FloatingNav() {
       icon: (
         <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "https://github.com/IamGagan444",
     },
-    {
-      title: "Twitter",
-      icon: (
-        <LogOut className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "#",
-    },
+
     {
       title: "Theme",
-      icon: (
-        
-        <ModeToggle/>
-      ),
+      icon: <ModeToggle />,
       href: "",
     },
   ];
+
+  if (status === "loading") {
+    return (
+      <div className="h-dvh w-full fixed inset-0 bg-gray-50 dark:bg-neutral-900 flex items-center justify-center z-50 ">
+        <Loader2 className=" animate-spin size-10 " />
+      </div>
+    );
+  }
 
   return (
     <div className="">

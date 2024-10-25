@@ -26,7 +26,6 @@ export default function MessageCard({
   message,
   onMessageDelete,
 }: MessageCardProps) {
-  console.log("message", message);
   const { toast } = useToast();
   const handleDeleteConfirm = async () => {
     const response = await axios.delete<ApiResponse>(
@@ -42,9 +41,7 @@ export default function MessageCard({
   return (
     <CardSpotlight className="h-96 w-[200px]">
       <div className="flex items-center justify-between">
-        <p className="text-xl font-bold relative z-20  text-white">
-          Message
-        </p>
+        <p className="text-xl font-bold relative z-20  text-white">Message</p>
 
         <AlertDialog>
           <AlertDialogTrigger asChild>

@@ -58,7 +58,8 @@ const config: Config = {
   		},
 		screens:{
 
-			custom400:"400px"
+			custom400:"400px",
+			custom500:"500px"
 		}
   	}
   },

@@ -105,7 +105,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "fixed bottom-5 left-0 right-0 mx-auto flex flex-wrap  h-16 gap-4 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3 w-fit ",
+        "fixed bottom-5 left-0 right-0 mx-auto flex  h-16 gap-4 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3 w-fit ",
         className
       )}
     >
@@ -174,7 +174,10 @@ function IconContainer({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <Link href={href}>
+    <Link
+      href={href}
+      className={`${title == "Gagan" ? " hidden custom500:block" : ""}`}
+    >
       <motion.div
         ref={ref}
         style={{ width, height }}
