@@ -3,6 +3,9 @@ import dbConnect from "@/lib/dbConnect";
 import {  UserModel } from "@/model/user.model";
 import { User } from "next-auth";
 
+// export const runtime = 'nodejs';
+
+
 export async function POST(request: Request) {
   await dbConnect();
 
@@ -58,9 +61,11 @@ export async function GET() {
       { status: 401 }
     );
   }
+ console.log(user);
 
   try {
     const foundUser = await UserModel.findById(user._id);
+    console.log(foundUser);
     if (!foundUser) {
       return Response.json(
         { message: "user not found", success: false },

@@ -29,19 +29,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
-        ><SessionProvider>
-
-       
-        
-        <main className="flex-grow">  {children}</main>
-          <FloatingNav />
-          <Toaster />
+        >
+          <SessionProvider>
+            <main className="flex-grow"> {children}</main>
+            <FloatingNav />
+            <Toaster />
           </SessionProvider>
         </ThemeProvider>
       </body>

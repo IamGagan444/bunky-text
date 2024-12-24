@@ -3,6 +3,9 @@ import dbConnect from "@/lib/dbConnect";
 import { UserModel } from "@/model/user.model";
 import bcrypt from "bcryptjs";
 
+export const dynamic = 'force-dynamic'
+export const preferredRegion = 'home'
+
 export async function POST(request: Request) {
   await dbConnect();
   const { username, email, password } = await request.json();

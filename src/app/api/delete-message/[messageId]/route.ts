@@ -4,6 +4,10 @@ import { UserModel } from "@/model/user.model";
 import mongoose from "mongoose";
 import { User } from "next-auth";
 
+export const dynamic = 'force-dynamic'
+export const preferredRegion = 'home'
+
+
 export async function DELETE(
   request: Request,
   { params }: { params: { messageId: string } }

@@ -1,6 +1,10 @@
 import { UserModel } from "@/model/user.model";
 import dbConnect from "@/lib/dbConnect";
 
+export const dynamic = 'force-dynamic'
+export const preferredRegion = 'home'
+
+
 export async function POST(request: Request) {
   await dbConnect();
 

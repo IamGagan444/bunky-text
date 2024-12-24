@@ -3,6 +3,10 @@ import z from "zod";
 import { usernameValidationSchema } from "@/schemas/signupSchema";
 import dbConnect from "@/lib/dbConnect";
 
+export const dynamic = 'force-dynamic'
+export const preferredRegion = 'home'
+
+
 const usernameQuerySchema = z.object({
   username: usernameValidationSchema,
 });

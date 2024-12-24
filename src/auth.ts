@@ -5,6 +5,9 @@ import { User, UserModel } from "./model/user.model";
 import dbConnect from "./lib/dbConnect";
 import bcrypt from "bcryptjs";
 
+export const dynamic = 'force-dynamic'
+export const preferredRegion = 'home'
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     credentials({
@@ -21,8 +24,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           placeholder: "........",
         },
       },
+      // @ts-ignore
       authorize: async (credentials):Promise<User|null> => {
-        console.log(credentials);
+        
         const email = credentials?.email as string | undefined;
         const password = credentials?.password as string | undefined;
         if (!email || !password) {
@@ -59,7 +63,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt: async ({ token, user }) => {
       if (user) {
         token._id = user._id?.toString();
-
         token.isVerified = user.isVerified;
         token.isAcceptingMessage = user.isAcceptingMessage;
         token.username = user.username;

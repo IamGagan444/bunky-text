@@ -1,5 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
+
+
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
 // Simple in-memory cache to store previously generated questions
